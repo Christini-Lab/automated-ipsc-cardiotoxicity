@@ -28,7 +28,7 @@ def plot_figure():
     ax.set_xlim(0, 9400)
     ax.set_xlabel('Time (ms)')
 
-    label_dict = {'Na1': 520, 'Na2': 1057, 'NaL': 2225, 'Kr': 3197, 'CaL': 3749, 'to': 4365, 'K1': 4955, 'f': 6388, 'Ks': 8905}
+    label_dict = {'Na1': 520, 'Na2': 2180, 'NaL': 2225, 'Kr': 3197, 'CaL': 3749, 'to': 4365, 'K1': 4955, 'f': 6388, 'Ks': 8905}
 
     for name, time in label_dict.items():
         ax.axvline(time, color='grey', linestyle='--', alpha=.4)

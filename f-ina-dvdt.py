@@ -30,6 +30,8 @@ def plot_figure_dvdt():
     plot_dvdt(axs[1], drug_name='quinine', is_pct_change=True)
 
     window = [2674.3, 2685]
+    #window = [1550.5, 1580]
+    #window = [1000, 1040]
     channel = 'I_Na'
 
     plot_curr(axs[2], 'flecainide', window, channel, is_change=True)
@@ -40,8 +42,11 @@ def plot_figure_dvdt():
         axs[vals[0]].spines['right'].set_visible(False)
         axs[vals[0]].spines['top'].set_visible(False)
     
-    axs[0].text(1.15, 270, 'Flecainide', fontsize=14)
-    axs[1].text(1.15, 270, 'Quinine', fontsize=14)
+    axs[0].text(1.15, 90, 'Flecainide', fontsize=14)
+    axs[1].text(1.15, 290, 'Quinine', fontsize=14)
+
+    axs[0].set_ylim(-100, 100)
+    axs[1].set_ylim(-100, 300)
 
     axs[0].set_ylabel(r'$dV/dt_{max}$')
 
@@ -140,11 +145,14 @@ def plot_curr(ax, drug, window, channel, is_change=False):
         vc_meta = pd.read_csv(f'data/cells/{f}/vc_meta.csv')
 
         if channel == 'I_Na':
-            if 'dmso' in f:
-                temp_window = [1550.5, 1580]
-                idx = np.array([int(val*25) for val in temp_window])
-            else:
-                idx = np.array([int(val*25) for val in window])
+            #if 'dmso' in f:
+            #    temp_window = [1550.5, 1580]
+            #    temp_window = window
+            #    idx = np.array([int(val*25) for val in temp_window])
+            #else:
+            idx = np.array([int(val*25) for val in window])
+
+    
 
         vc_slice = vc_dat.iloc[idx[0]:idx[1], :]
 
@@ -210,7 +218,7 @@ def plot_curr(ax, drug, window, channel, is_change=False):
 
         ax.text(i-.05, y_sig, aster, fontsize=14)
 
-    ax.set_ylabel(r'Change from Baseline (%)')
+    ax.set_ylabel(r'$I_{Na}$ Change from Baseline (%)')
 
     #ax.legend()
 

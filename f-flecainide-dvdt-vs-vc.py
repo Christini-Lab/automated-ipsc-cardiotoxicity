@@ -179,9 +179,6 @@ def plot_dvdt_vs_vc(ax, drug_name):
     print(feature_corrs)
 
 
-    import pdb
-    pdb.set_trace()
-
 
 
 

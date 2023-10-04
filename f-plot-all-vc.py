@@ -15,7 +15,11 @@ plt.rc('legend', fontsize = 8)
 
 
 def plot_all_vc(channel=None):
-    all_files = get_valid_cells('flecainide') + get_valid_cells('quinine')
+    all_files = get_valid_cells('dmso') + get_valid_cells('flecainide') + get_valid_cells('quinine')
+    #all_files = get_valid_cells('quinine')
+    #all_files = get_valid_cells('dmso')
+    #all_files = get_valid_cells('flecainide')
+    
 
     windows = {'I_Na': [1550, 1580],
                'I_Kr': [3670, 3730],
@@ -31,6 +35,7 @@ def plot_all_vc(channel=None):
         ylims = ch_ylims[channel]
     else:
         window = None
+        window = [0, 10000]
         ylims = None
 
     fig, axs = plt.subplots(2, 1, figsize=(6.5, 5), sharex=True)
@@ -40,19 +45,19 @@ def plot_all_vc(channel=None):
     vc_pts = get_vc_pts()
     axs[0].plot(vc_pts[:, 0], vc_pts[:, 1], 'k')
 
-    
     for i, f in enumerate(all_files):
         plot_window(f, window, axs[1], ylims=ylims)
 
-    plot_models(axs[0], axs[1], 'Kernik')
+    #plot_models(axs[0], axs[1], 'Kernik')
     #plot_models(axs[0], axs[1], 'Paci')
 
     axs[0].set_ylabel('Voltage (mV)')
 
-    axs[1].set_ylabel('pA')
+    axs[1].set_ylabel('pA/pF')
     #axs[2].set_ylabel('dA_F/dt')
     axs[1].set_xlabel('Time (ms)')
-    axs[1].legend()
+    axs[0].set_xlim(window[0], window[1])
+    #axs[1].legend()
 
     for ax in axs:
         ax.spines['top'].set_visible(False)
@@ -71,7 +76,7 @@ def plot_window(f, window, ax_c, ylims=None):
     vc_dat = pd.read_csv(f'data/cells/{f}/vc_df.csv')
     vc_meta = pd.read_csv(f'data/cells/{f}/vc_meta.csv')
     times = np.linspace(0, int(vc_dat.shape[0]/25), vc_dat.shape[0]+1)[0:-1]
-    
+
     if window is not None:
         idx = np.array([int(val*25) for val in window])
         vc_slice = vc_dat.iloc[idx[0]:idx[1], :]
@@ -79,33 +84,14 @@ def plot_window(f, window, ax_c, ylims=None):
     else:
         vc_slice = vc_dat
 
-
+    
     k = vc_dat.keys()[1]
     curr_dat = vc_slice[k].values
     curr_dat_1 = moving_average(curr_dat, n=5)
     times_1 = moving_average(times, n=5)
-    #times, curr_dat = smooth_data(times, curr_dat, window=5)
+
     curr_meta = vc_meta[vc_meta['sweep'] == k]
-    ax_c.plot(times_1, curr_dat_1/vc_meta['cm'].mean(), label=f)
-    curr_dat_1 = curr_dat_1 / 1E-12 / 20
-
-    if curr_dat_1[0] < -400:
-        return
-
-    #if (curr_dat_1[0] < -400):
-    #    continue
-
-    #ax_c.plot(times_1, curr_dat_1, label=f)#, color='k', alpha=.4)
-
-    #curr_dat_2 = moving_average(curr_dat, n=500)
-    #times_2 = moving_average(times, n=500)
-    #dt = times_2[1] - times_2[0]
-    #ax_c_dt.plot(times_2[:-1], np.diff(curr_dat_2/vc_meta['cm'].mean())/dt)
-
-    #ax_c.set_xlim(times[0], times[-1])
-
-    #if ylims is not None:
-    #    ax_c.set_ylim(ylims[0], ylims[1])
+    ax_c.plot(times_1, curr_dat_1/vc_meta['cm'].mean(), label=f, color='grey', alpha=.4)
 
 
 def plot_models(ax_v, ax_i, model_name):

@@ -152,8 +152,6 @@ def get_valid_cells(drug_name):
                   'dmso_230403_001_3',#iCell
                   'dmso_230403_003_1',#iCell
                   'dmso_230403_001_2',#iCell
-
-
                   ]
 
     flecainide_files = [
@@ -170,7 +168,7 @@ def get_valid_cells(drug_name):
                     'flecainide_221028_008_4',
                     'flecainide_221117_001_2', #NEW: MAYBE
                     'flecainide_221117_001_3', #NEW: 
-                    'flecainide_221117_005_4',
+                    #'flecainide_221117_005_4',
                     'flecainide_230403_005_4',#iCell
                     'flecainide_230403_009_3',#iCell
                     'flecainide_230403_007_3',#iCell

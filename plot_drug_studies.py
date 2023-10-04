@@ -23,7 +23,7 @@ def save_all_vc_ap_data():
     for cell_folder in all_cells:
         if 'archive' in cell_folder:
             continue
-        if '230403' not in cell_folder:
+        if '230412' not in cell_folder:
             continue
         #if 'flecainide_221028' not in cell_folder:
         #    continue
@@ -92,7 +92,7 @@ def save_ap_dat(cell_folder):
     plt.close()
 
 
-def save_vc_dat(cell_folder, time_window):
+def save_vc_dat(cell_folder, time_window, with_mv_avg=False):
     labs = ['Baseline', None, '3xEFPC', None, '10xEFPC', None, '20xEFPC', None, 'Wash', None]
 
     vc_file = open('./vc_proto_optimization/results/exp_14/long_proto_steps.csv', 'r')
@@ -126,25 +126,38 @@ def save_vc_dat(cell_folder, time_window):
     fig, axs = plt.subplots(2, 1, sharex=True, figsize=(12, 8))
 
     i = 0
-    for k in vc_dat.keys():
-        curr_dat = vc_dat[k].values
+    for k in ['Baseline', '3xEFPC', '10xEFPC', '20xEFPC', 'Washout']:
+    #for k in vc_dat.keys():
+        curr_meta = vc_meta[vc_meta['compound'] == k]
 
-        curr_meta = vc_meta[vc_meta['sweep'] == k]
+        try:
+            curr_dat_1 = vc_dat[curr_meta['sweep'].values[0]].values
+        except:
+            import pdb
+            pdb.set_trace()
+        curr_dat_2 = vc_dat[curr_meta['sweep'].values[1]].values
 
-        if 'Baseline' == curr_meta['compound'].values[0]:
+        curr_dat = np.mean([curr_dat_1, curr_dat_2], 0)
+
+        if 'Baseline' == k:
             cols = c=(0, 0, 0)
-        if '3xEFPC' == curr_meta['compound'].values[0]:
+        if '3xEFPC' == k:
             cols = c=(1, .7, .7)
-        if '10xEFPC' == curr_meta['compound'].values[0]:
+        if '10xEFPC' == k:
             cols =(1, .4, .4)
-        if '20xEFPC' == curr_meta['compound'].values[0]:
+        if '20xEFPC' == k:
             cols =(1, 0, 0)
-        if 'Washout' == curr_meta['compound'].values[0]:
+        if 'Washout' == k:
             cols =(.5, .5, .5)
 
         if time_window is None:
-            cm = vc_meta['cm'].mean()
-            axs[1].plot(times, curr_dat/cm, c=cols, label=labs[i])
+            cm = curr_meta['cm'].mean()
+            if with_mv_avg:
+                times_new = moving_average(times, 10)
+                curr_new = moving_average(curr_dat, 10)
+                axs[1].plot(times_new, curr_new/cm, c=cols, label=k)
+            else:
+                axs[1].plot(times, curr_dat/cm, c=cols, label=labs[i])
             #axs[1].plot(times, curr_dat, c=cols, label=labs[i])
         else:
             it = time_window
@@ -174,6 +187,8 @@ def save_vc_dat(cell_folder, time_window):
 
     axs[1].legend()
     if time_window is None:
+        import pdb
+        pdb.set_trace()
         plt.savefig(f'data/cells/{cell_folder}/vc_dat.pdf',)
     else:
         plt.savefig(f'data/cells/{cell_folder}/{time_window[0]}_vc_dat.pdf',)
@@ -207,10 +222,20 @@ def save_vc_dat(cell_folder, time_window):
 
             axs[1].set_ylim(min_val, max_val)
 
-        plt.savefig(f'data/cells/{cell_folder}/{curr}_vc_dat.pdf')
+        #plt.savefig(f'data/cells/{cell_folder}/{curr}_vc_dat.pdf')
 
 
     plt.close()
 
 
-save_all_vc_ap_data()
+def moving_average(x, n=10):
+    idxs = range(n, len(x), n)
+    new_vals = [x[(i-n):i].mean() for i in idxs]
+
+    return np.array(new_vals)
+
+
+
+#save_all_vc_ap_data()
+
+save_vc_dat('quinine_221206_009_1', None, with_mv_avg=True)

@@ -216,6 +216,10 @@ def write_dmso():
     save_cell_data(folder='./data/iPSC-dmso-flec-quin_4-3-2023', date='230403', file_num='004', ch=3, drug='dmso')
     save_cell_data(folder='./data/iPSC-dmso-flec-quin_4-3-2023', date='230403', file_num='004', ch=4, drug='dmso')
 
+    save_cell_data(folder='./data/iPSC_dmso_4-12-2023', date='230412', file_num='005', ch=2, drug='dmso')
+
+
+
 
 def write_quinine():
     #9/29
