@@ -19,7 +19,7 @@ matplotlib.rcParams['pdf.fonttype'] = 42
 
 
 
-def plot_single_dvdt_vs_vc():
+def plot_figure():
     fig, axs = plt.subplots(1, 2, figsize=(6.5, 3.5))
     fig.subplots_adjust(.1, .15, .95, .95)
 
@@ -35,26 +35,9 @@ def plot_single_dvdt_vs_vc():
 
 
     axs[0].set_ylabel(r'$dV/dt_{max}$ (V/s)')
-    axs[0].set_xlabel(r'Current (A/F)')
-    axs[1].set_xlabel(r'Current (A/F)')
+    axs[0].set_xlabel(r'$I_{Na}$ Segment Current (A/F)')
+    axs[1].set_xlabel(r'$I_{Na}$ Segment Current (A/F)')
     #ax.set_xlim(-525, 0)
-
-    plt.savefig('./figure-pdfs/f-dvdt-vs-vc.pdf')
-    plt.show()
-
-
-def plot_figure_dvdt_vs_vc():
-    fig, axs = plt.subplots(2, 2, figsize=(6.5, 5.5), sharex=True, sharey=True)
-    fig.subplots_adjust(.1, .1, .95, .95)
-
-    axs = axs.flatten()
-
-    plot_dvdt_vs_vc(axs)
-
-    for vals in [[0, 'A'], [1, 'B'], [2, 'C'], [3, 'D']]:
-        axs[vals[0]].set_title(vals[1], y=.94, x=-.15)
-        axs[vals[0]].spines['right'].set_visible(False)
-        axs[vals[0]].spines['top'].set_visible(False)
 
     plt.savefig('./figure-pdfs/f-dvdt-vs-vc.pdf')
     plt.show()
@@ -65,11 +48,9 @@ def plot_dvdt_vs_vc(ax, drug_name):
 
     means_dvdt = []
 
-    na_window = [1556.3, 1580]
     na_window = [2674.3, 2685]
 
     na_idx = np.array([int(val*25) for val in na_window])
-
     na_idx = np.array([int(val*25) for val in na_window])
 
     dat_dict = {'File': [],
@@ -117,9 +98,6 @@ def plot_dvdt_vs_vc(ax, drug_name):
                                ap_meta[ap_meta['compound'] == compound]['dvdt_max'].std()])
 
         mean_dvdt = np.array(mean_dvdt)
-        # USES A DIFFERENT CHANGE CALCULATION THAN f-flecainide_dvdt.plot_dvdt_changes(). 
-        # IN THAT FUNCTION, I CALCULATE PRE- TO POST- WITHIN THE SAME TRIAL.
-        # HERE, I LOOK AT DV/DT ACCROSS ALL TRIALS, REGARDLESS OF TIME.
 
         for i, compound in enumerate(['Baseline', '3xEFPC', '10xEFPC',
                                                   '20xEFPC', 'Washout']):
@@ -251,8 +229,7 @@ def get_all_ap_meta():
 
 
 def main():
-    #plot_figure_dvdt_vs_vc()
-    plot_single_dvdt_vs_vc()
+    plot_figure()
 
 
 if __name__ == '__main__':

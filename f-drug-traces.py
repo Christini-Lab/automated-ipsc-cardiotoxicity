@@ -15,7 +15,7 @@ plt.rc('legend', fontsize = 8)
 
 def plot_drug_window(drug, channel):
     all_files = get_valid_cells(drug) 
-    windows = {'I_Na': [1550, 1580],
+    windows = {'I_Na': [2672, 2680],
                'I_Kr': [3670, 3730],
                'I_to': [4856, 4876],
                'I_CaL': [4245, 4260]}
@@ -108,8 +108,8 @@ def plot_window(f, window, ax_c, ax_v=None, ylims=None):
 
 
 def main():
-    #plot_drug_window('flecainide', 'I_Na')
-    plot_drug_window('dmso', 'I_Na')
+    plot_drug_window('quinine', 'I_Na')
+    #plot_drug_window('dmso', 'I_Na')
 
     #plot_drug_window('flecainide', 'I_Kr')
     #plot_drug_window('dmso', 'I_Kr')

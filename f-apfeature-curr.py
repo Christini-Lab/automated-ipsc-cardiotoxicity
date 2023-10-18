@@ -411,9 +411,9 @@ def get_all_ap_meta(drug_name):
 
 
 def main():
-    #plot_ap_figure(feature='dvdt_max', is_pct_change=True)
+    plot_ap_figure(feature='dvdt_max', is_pct_change=True)
     #plot_ap_figure(feature='mdp',  is_pct_change=False)
-    plot_ap_figure(feature='apd90',  is_pct_change=False)
+    #plot_ap_figure(feature='apd90',  is_pct_change=False)
     #plot_vc_figure('Na1_min', True)#THROW OUT ANY CELLS WITH BASELINE NA >-29 A/F
     #plot_vc_figure('Na2_min', False)#THROW OUT ANY CELLS WITH BASELINE NA >-29 A/F
     #plot_vc_figure('NaL_avg', False)
