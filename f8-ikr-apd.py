@@ -133,22 +133,12 @@ def plot_curr(ax, drug, window, channel, is_change=False):
         vc_dat = pd.read_csv(f'data/cells/{f}/vc_df.csv')
         vc_meta = pd.read_csv(f'data/cells/{f}/vc_meta.csv')
 
-        if channel == 'I_Na':
-            if 'dmso' in f:
-                temp_window = [1550.5, 1580]
-                idx = np.array([int(val*25) for val in temp_window])
-            else:
-                idx = np.array([int(val*25) for val in window])
+        idx = np.array([int(val*25) for val in window])
 
         vc_slice = vc_dat.iloc[idx[0]:idx[1], :]
 
         min_vals = vc_slice.min().values / vc_meta['cm'].values
         min_vals = [np.mean(min_vals[i*2:i*2+2]) for i in range(0, 5)]
-
-        if channel == 'I_Na':
-            if np.min(min_vals) > -20:
-                print(f'{f}: No sign of Na at any concentration')
-                continue
 
         if 'dmso' in f:
             vc_dict['Drug'].append('DMSO')

@@ -168,7 +168,7 @@ def plot_i(ax, window=[0, 9444], curr_name=None):
 
         #ax.plot(times_1, all_dat[min_idx])
         #ax.plot(times_1, all_dat[max_idx])
-    
+ 
 
 # PLOTTING FUNCTIONS
 def plot_models(ax_v, ax_i, model_name):
