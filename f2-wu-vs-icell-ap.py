@@ -110,7 +110,7 @@ def plot_ap_features(ax, feature, by_lab=False):
     print(f'The mean and SD of {feature} is {np.mean(all_vals)} +- {np.std(all_vals)}')
 
     if by_lab == True:
-        labels = ['Wu', 'iCell']
+        labels = ['GreenStone', 'Fuji']
         #colors = ['r', 'g']
 
         for i, vals in enumerate([wu_vals, icell_vals]):

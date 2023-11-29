@@ -121,10 +121,28 @@ def plot_curr(ax, drug, window, channel, is_change=False):
     min_val = np.concatenate((dmso_diff, drug_diff)).min()
 
     y_sig = max_val + np.abs(max_val)*.1
-    is_sig = [ttest_ind(dmso_diff[:,i], drug_diff[:,i]).pvalue < .05 for i in range(0, 5)]
+    #is_sig = [ttest_ind(dmso_diff[:,i], drug_diff[:,i]).pvalue < .05 for i in range(0, 5)]
+    sig_vals = [ttest_ind(dmso_diff[:,i], drug_diff[:,i]).pvalue for i in range(0, 5)]
 
-    [ax.text(i, y_sig, '*', fontsize=18) for i in range(0, 5) if is_sig[i]]
+    #[ax.text(i, y_sig, '*', fontsize=18) for i in range(0, 5) if is_sig[i]]
 
+    #sig_vals = [ttest_ind(dmso_dat.iloc[:, 3:].values[:, i],
+    #                drug_dat.iloc[:, 3:].values[:, i]).pvalue
+    #                    for i in range(0, 4)]
+
+
+
+    for i, sig_val in enumerate(sig_vals):
+        if sig_val < .001:
+            aster = '***'
+        elif sig_val < .01:
+            aster = '**'
+        elif sig_val < .05:
+            aster = '*'
+        else:
+            aster = ''
+
+        ax.text(i-.05, y_sig, aster, fontsize=14)
 
     #ax.legend()
 

@@ -23,7 +23,7 @@ def plot_figure():
 
     axs = []
 
-    sub = grid[0]
+    sub = grid[2]
     corr_sub = sub.subgridspec(1, 1)
     ax = fig.add_subplot(corr_sub[0])
     axs.append(ax)
@@ -57,7 +57,7 @@ def plot_figure():
     ax_i.annotate("", xy=(3696, -3), xytext=(3696, -8), arrowprops=dict(headwidth=7, headlength=7, width=0.1, color='k'))
 
 
-    sub = grid[:, 2]
+    sub = grid[:, 0]
     corr_sub = sub.subgridspec(2, 1, height_ratios=[1,2])
     ax_v = fig.add_subplot(corr_sub[0])
     ax_i = fig.add_subplot(corr_sub[1])
@@ -79,9 +79,9 @@ def plot_figure():
         ax.spines['top'].set_visible(False)
         ax.spines['right'].set_visible(False)
     
-    axs[0].set_title('A', y=.94, x=-.35)
+    axs[0].set_title('C', y=.94, x=-.35)
     axs[2].set_title('B', y=.9, x=-.15)
-    axs[4].set_title('C', y=.9, x=-.15)
+    axs[4].set_title('A', y=.9, x=-.15)
 
 
     plt.savefig('figure-pdfs/f-no-ikr.pdf')

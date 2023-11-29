@@ -67,7 +67,7 @@ def plot_figure():
     axs_2[0].text(-7, 50, 'B')
     axs_2[0].text(-2, 30, 'Quin')
     
-    ax_flec.set_ylabel(r'$dV/dt_{max}$')
+    ax_flec.set_ylabel(r'Change in $dV/dt_{max}$ (%)')
 
 
     plt.savefig('./figure-pdfs/f-ap-upstroke-drug.pdf')

@@ -40,8 +40,12 @@ def plot_figure():
         else: 
             ax.text(time-50, 60, name, fontsize=9)
 
+    plt.arrow(1025, -5, 0, -20, head_width=100, head_length=5, fc='black', ec='black')
+
     plt.savefig(f'./figure-pdfs/f-vc-proto.pdf')
 
     plt.show()
+
+
 
 plot_figure()
