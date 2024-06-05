@@ -123,6 +123,8 @@ def plot_curr(ax, drug, window, channel, is_change=False):
     y_sig = max_val + np.abs(max_val)*.1
     #is_sig = [ttest_ind(dmso_diff[:,i], drug_diff[:,i]).pvalue < .05 for i in range(0, 5)]
     sig_vals = [ttest_ind(dmso_diff[:,i], drug_diff[:,i]).pvalue for i in range(0, 5)]
+    import pdb
+    pdb.set_trace()
 
     #[ax.text(i, y_sig, '*', fontsize=18) for i in range(0, 5) if is_sig[i]]
 

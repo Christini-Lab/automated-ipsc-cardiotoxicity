@@ -127,10 +127,17 @@ def plot_i(ax, window=[0, 9444], curr_name=None):
     if window[1] - window[0] < 20:
         mv_avg = 2
 
+    all_cap = []
+    all_rseries = []
+    all_seal = []
+
     for i, f in enumerate(all_files):
         vc_dat = pd.read_csv(f'data/cells/{f}/vc_df.csv')
         vc_slice = vc_dat.iloc[idx[0]:idx[1], :]
         vc_meta = pd.read_csv(f'data/cells/{f}/vc_meta.csv')
+        all_cap.append(vc_meta['cm'].mean())
+        all_rseries.append(vc_meta['r_series'].mean())
+        all_seal.append(vc_meta['r_seal'].mean())
         k = vc_dat.keys()[1]
         curr_dat = vc_slice[k].values
         curr_dat_1 = moving_average(curr_dat, n=mv_avg)/vc_meta['cm'].mean()
@@ -138,6 +145,15 @@ def plot_i(ax, window=[0, 9444], curr_name=None):
         all_dat.append(curr_dat_1)
         print(i)
 
+
+    #Measure capacitance AND rseries
+    np.mean(all_cap)/1E-12
+    np.std(all_cap)/1E-12
+    np.mean(all_rseries)/1E6
+    np.std(all_rseries)/1E6
+
+    import pdb
+    pdb.set_trace()
 
     times = np.linspace(0, int(vc_dat.shape[0]/25), vc_dat.shape[0]+1)[0:-1]
     times = times[idx[0]:idx[1]]

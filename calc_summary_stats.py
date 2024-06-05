@@ -79,8 +79,6 @@ def write_currs_dat(f):
     return curr_values
 
 
-
-
 def get_dvdt(ap_num, ap):
     stim_region = ap.values[int(48*25):int(65*25)]
 
@@ -97,7 +95,7 @@ def get_dvdt(ap_num, ap):
 
     max_dvdt -= stim_start_dvdt
 
-    is_na_during_stim = not np.all(np.abs(np.diff(diff[7:20])) < 10)
+    is_na_during_stim = not np.all(np.abs(np.diff(diff[7:20])) < 7)
     is_late_upstroke = not np.max(diff[21:35]) < 5
 
     if is_na_during_stim or is_late_upstroke:

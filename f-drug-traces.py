@@ -15,10 +15,12 @@ plt.rc('legend', fontsize = 8)
 
 def plot_drug_window(drug, channel):
     all_files = get_valid_cells(drug) 
+    all_files = ['quinine_230403_011_3']
     windows = {'I_Na': [2672, 2680],
                'I_Kr': [3670, 3730],
                'I_to': [4856, 4876],
                'I_CaL': [4245, 4260]}
+    windows = {'I_Na': [0, 10000]}
     ch_ylims = {'I_Na': None,
                 'I_Kr': [-20, 8],
                 'I_to': [-30, 10], 
@@ -39,7 +41,7 @@ def plot_drug_window(drug, channel):
 
     axs[-1].set_xlabel('Time (ms)')
 
-    plt.savefig(f'./figure-pdfs/f-{drug}-{channel}.pdf')
+    #plt.savefig(f'./figure-pdfs/f-{drug}-{channel}.pdf')
     plt.show()
 
 
@@ -80,9 +82,9 @@ def plot_window(f, window, ax_c, ax_v=None, ylims=None):
             cols =(.5, .5, .5)
 
         if i == 0:
-            ax_c.plot(times, curr_dat/vc_meta['cm'].mean(), c=cols, label=f)
+            ax_c.plot(moving_average(times, n=20), moving_average(curr_dat/vc_meta['cm'].mean(), n=20), c=cols, label=f)
         else:
-            ax_c.plot(times, curr_dat/vc_meta['cm'].mean(), c=cols)
+            ax_c.plot(moving_average(times, n=20), moving_average(curr_dat/vc_meta['cm'].mean(), n=20), c=cols)
 
     ax_c.spines['top'].set_visible(False)
     ax_c.spines['right'].set_visible(False)
@@ -94,7 +96,7 @@ def plot_window(f, window, ax_c, ax_v=None, ylims=None):
         pdb.set_trace()
     if ylims is not None:
         ax_c.set_ylim(ylims[0], ylims[1])
-    ax_c.legend(loc=4)
+    #ax_c.legend(loc=4)
 
     scales = {'Baseline': {'g_Kr': 1, 'g_to': 1, 'g_Na': 1, 'g_CaL': 1},
               '3xEFPC': {'g_Kr': .3, 'g_to': .75, 'g_Na': .9, 'g_CaL': .98},
@@ -104,6 +106,13 @@ def plot_window(f, window, ax_c, ax_v=None, ylims=None):
 
     #for conc, scale_vals in scales.items():
     #    dat = get_model_response('Kernik', scale_vals)
+
+
+def moving_average(x, n=10):
+    idxs = range(n, len(x), n)
+    new_vals = [x[(i-n):i].mean() for i in idxs]
+
+    return np.array(new_vals)
 
 
 

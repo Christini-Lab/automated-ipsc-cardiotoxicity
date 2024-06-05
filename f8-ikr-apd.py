@@ -105,6 +105,7 @@ def plot_apd(ax, drug_name):
 
     y_sig = max_val + np.abs(max_val)*.1
     is_sig = [ttest_ind(dmso_means[:,i], drug_means[:,i]).pvalue < .05 for i in range(0, 4)]
+    sig_vals = [ttest_ind(dmso_means[:,i], drug_means[:,i]).pvalue for i in range(0, 4)]
 
     [ax.text(i, y_sig, '*', fontsize=18) for i in range(0, 4) if is_sig[i]]
 
@@ -161,7 +162,7 @@ def plot_curr(ax, drug, window, channel, is_change=False):
     if is_change:
         dmso_diff = np.array([(vals-vals[0]).astype('float64') for vals in dmso_dat.values[:, 2:]])
         drug_diff = np.array([(vals-vals[0]).astype('float64') for vals in drug_dat.values[:, 2:] if vals[2]-vals[0] <15])
-        ax.set_ylabel(r'Change from Baseline (A/F)')
+        ax.set_ylabel(r'Change in $I_{Kr}$ segment (A/F)')
     else:
         dmso_diff = np.array([100*(vals-vals[0]).astype('float64')/vals[0] for vals in dmso_dat.values[:, 2:]])
         drug_diff = np.array([100*(vals-vals[0]).astype('float64')/vals[0] for vals in drug_dat.values[:, 2:] if vals[2]-vals[0] <15])
@@ -184,6 +185,7 @@ def plot_curr(ax, drug, window, channel, is_change=False):
 
     y_sig = max_val + np.abs(max_val)*.1
     is_sig = [ttest_ind(dmso_diff[:,i], drug_diff[:,i]).pvalue < .05 for i in range(0, 5)]
+    sig_vals = [ttest_ind(dmso_diff[:,i], drug_diff[:,i]).pvalue for i in range(0, 5)]
 
     [ax.text(i, y_sig, '*', fontsize=18) for i in range(0, 5) if is_sig[i]]
 
@@ -269,8 +271,6 @@ def get_all_ap_meta(drug_name):
         print(apd_is_na[:, 0])
 
     pickle.dump(meta, open(f'./data/{drug_name}_apd_meta.pkl', 'wb'))
-    import pdb
-    pdb.set_trace()
 
     return meta
 

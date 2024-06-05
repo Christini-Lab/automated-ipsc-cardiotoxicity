@@ -138,61 +138,47 @@ class VCSegment():
 
 
 def get_valid_cells(drug_name):
-    dmso_files = [#'dmso_220829_001_2',# – no NaV present… good example of this. Seemingly, not much of anything present.
-                  'dmso_220829_001_3',# Great cell
-                  #'dmso_220829_002_1',# Great cell, but NO WASH
-                  'dmso_220829_003_1',# Great cell
-                  'dmso_220829_007_2',# Great cell
-                  'dmso_220929_001_1',# Weird one
-                  #'dmso_220929_001_2',# – no sodium here… really no ion channels at all.
-                  #'dmso_220929_002_3',# – KEEP… Take understimulation into account!
-                  #'dmso_221115_002_4', #NEW: Seems pretty good
-                  #'dmso_221115_009_3' #NEW: need to figure out issues with last trial
-                  #'dmso_230403_004_1',#iCell
-                  'dmso_230403_001_3',#iCell
-                  'dmso_230403_003_1',#iCell
-                  'dmso_230403_001_2',#iCell
+    dmso_files = [
+                  'dmso_220829_001_3',
+                  'dmso_220829_003_1',
+                  'dmso_220829_007_2',
+                  'dmso_220929_001_1',
+                  'dmso_230403_001_3',
+                  'dmso_230403_003_1',
+                  'dmso_230403_001_2'
                   ]
 
     flecainide_files = [
-                    #'flecainide_220617_001_1',# – KEEP… going to have to figure out compensation issue
                     'flecainide_220617_001_3',
-                    #'flecainide_220617_001_4',
-                    #'flecainide_220617_005_1',
                     'flecainide_220617_005_2',
-                    #'flecainide_220617_005_3',
-                    #'flecainide_220830_007_3',# – GOOD EXAMPLE OF NO SODIUM CELL
                     'flecainide_220830_010_3',
                     'flecainide_220901_009_3',
                     'flecainide_221028_003_4',
                     'flecainide_221028_008_4',
-                    'flecainide_221117_001_2', #NEW: MAYBE
-                    'flecainide_221117_001_3', #NEW: 
-                    #'flecainide_221117_005_4',
-                    'flecainide_230403_005_4',#iCell
-                    'flecainide_230403_009_3',#iCell
-                    'flecainide_230403_007_3',#iCell
-                    'flecainide_230403_008_1'#iCell
+                    'flecainide_221117_001_2',
+                    'flecainide_221117_001_3',
+                    'flecainide_230403_005_4',
+                    'flecainide_230403_009_3',
+                    'flecainide_230403_007_3',
+                    'flecainide_230403_008_1'
                     ]
 
     quinine_files = [
-                    'quinine_220929_004_1', #MAYBE, but no Na and not much else
-                    'quinine_221013_008_2', #MAYBE, no Na 
-                    'quinine_221206_001_1', #OKAY, some weird APs, but ok
-                    'quinine_221206_001_3', #OKAY
-                    'quinine_221206_002_3', #OKAY
-                    'quinine_221206_003_1', #OKAY
+                    'quinine_220929_004_1',
+                    'quinine_221013_008_2',
+                    'quinine_221206_001_1',
+                    'quinine_221206_001_3',
+                    'quinine_221206_002_3',
+                    'quinine_221206_003_1',
                     'quinine_221206_003_2',
-                    'quinine_221206_007_2', #MAYBE
-                    'quinine_221206_009_1', #MAYBE
+                    'quinine_221206_007_2',
+                    'quinine_221206_009_1',
                     'quinine_221206_009_2', 
                     'quinine_230120_007_3', 
                     'quinine_230120_010_2',
-                    'quinine_230403_011_1', #iCell
-                    'quinine_230403_011_3', #iCell
+                    'quinine_230403_011_1',
+                    'quinine_230403_011_3'
             ]
-
-
 
     if drug_name == 'dmso':
         return dmso_files

@@ -16,13 +16,6 @@ plt.rc('legend', fontsize = 8)
 matplotlib.rcParams['pdf.fonttype'] = 42
 
 def plot_figure():
-    # quinine_221206_003_1
-    # quinine_221206_009_1
-    # quinine_221206_009_2
-    # quinine_230120_007_3
-    # quinine_230120_010_2
-    # quinine_230403_011_1
-    # quinine_230403_011_3
     fig = plt.figure(figsize=(6.5, 6))
     fig.subplots_adjust(.1, .1, .95, .93)
     grid = fig.add_gridspec(4, 4, hspace=.6, wspace=.5)
@@ -220,6 +213,7 @@ def plot_ap_feature(ax, drug_name, feature_name, is_pct_change=False):
 
 def main():
     plot_figure()
+
 
 if __name__ == '__main__':
     main()
